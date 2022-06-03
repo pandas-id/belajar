@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belajar VueJs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+  <form @submit.prevent="addTodo">
+    <input v-model="newTodo">
+    <button>Tambahkan</button>
+  </form>
+  <ul>
+    <li v-for="todo in todos" :key="todo.id">
+      {{ todo.text }}
+      <button @click="removeTodo(todo)">X</button>
+    </li>
+  </ul>
+</div>
+
+<script src="https://unpkg.com/vue@3"></script>
+<script type="module">
+  const { createApp } = Vue
+
+  let id = 0
+
+  createApp({
+    data() {
+      return {
+        newTodo: '',
+        todos: [
+          { id: id++, text: 'Belajar Html' },
+          { id: id++, text: 'Belajar Javascript' },
+          { id: id++, text: 'Belajar Html' }
+        ]
+      }
+    },
+    methods: {
+      addTodo() {
+        this.todos.push({ id: id++, text: this.newTodo })
+        this.newTodo = ''
+      },
+      removeTodo(todo) {
+        this.todos = this.todos.filter((t) => t !== todo)
+      }
+    }
+  }).mount('#app')
+</script>
+</body>
+</html>
+
+
+
+
